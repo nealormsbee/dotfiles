@@ -1,3 +1,5 @@
+-- Basic editor keymappings - not specific to any extensions
+
 -- set leaders
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
