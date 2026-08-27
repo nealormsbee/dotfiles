@@ -16,7 +16,7 @@ sudo dnf -y autoremove
 echo "Clearing dnf cache..."
 sudo dnf -y clean all
 
-# update om-my-zsh
+# update oh-my-zsh
 echo "Updating oh-my-zsh..."
 ZSH='/home/neal/.oh-my-zsh'
 zsh "$ZSH/tools/upgrade.sh"
@@ -34,3 +34,27 @@ zi update --parallel
 
 # update neovim plugins via lazy.nvim
 nvim --headless "+Lazy! sync" +qa
+
+# update homebrew
+echo "Updating Homebrew..."
+brew update
+
+# upgrade brew packages
+echo "Upgrading Homebrew CLI tools..."
+brew upgrade
+
+# upgrade brew casks
+echo "Upgrading Homebrew casks..."
+brew upgrade --cask
+
+# clean up old brew packages
+echo "Cleaning up old Homebrew package versions..."
+brew cleanup
+
+# restart any homebrew background services
+echo "Restarting Homebrew services..."
+brew services restart --all
+
+# confirm brew system integrity
+echo "Running brew doctor..."
+brew doctor
