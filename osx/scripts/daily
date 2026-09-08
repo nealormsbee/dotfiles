@@ -60,3 +60,6 @@ zi update --parallel
 
 # update neovim plugins via lazy.nvim
 nvim --headless "+Lazy! sync" +qa
+
+# update rust install via rustup
+rustup update

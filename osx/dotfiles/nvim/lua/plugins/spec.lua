@@ -217,7 +217,7 @@ return {
 		config = function()
 			require("lualine").setup({
 				options = {
-					theme = "tokyonight", -- 'gruvbox', 'tokyonight', etc.
+					theme = "ayu_mirage", -- 'gruvbox', 'tokyonight', etc.
 					globalstatus = true, -- use a single statusline at the bottom for all windows
 				},
 				sections = {
