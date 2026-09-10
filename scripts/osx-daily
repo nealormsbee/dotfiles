@@ -1,0 +1,63 @@
+#!/bin/zsh
+
+if [ "$1" = "--speak" ]; then
+  doSpeak=true
+else
+  doSpeak=
+fi
+
+speak() {
+    if [ $doSpeak ]; then
+      say $1
+    fi
+}
+
+# update om-my-zsh
+echo "Updating oh-my-zsh..."
+ZSH='/home/neal/.oh-my-zsh'
+zsh "$ZSH/tools/upgrade.sh"
+
+# initialize zinit for this shell
+source "/home/neal/.local/share/zinit/zinit.git/zinit.zsh"
+
+# update zinit
+echo "Updating zinit..."
+zi self-update
+
+# update zinit plugins
+echo "Updating zinit plugins..."
+zi update --parallel
+
+# update rust install via rustup
+echo "Updating rust..."
+rustup update
+
+# update homebrew
+echo Updating...
+speak "Updating"
+brew update
+
+# upgrade packages
+echo Upgrading non-casks...
+speak "Upgrading see el eye tools"
+brew upgrade
+
+# upgrade casks
+echo Upgrading casks...
+speak "Upgrading casks"
+brew upgrade --cask
+
+# remove old package versions
+echo Removing old versions...
+speak "Removing old versions"
+brew cleanup
+
+# restart background services
+echo "Restarting background services..."
+speak "Restarting background services..."
+brew services restart --all
+
+# confirm system integrity
+echo Running brew system check...
+speak "Running brew doctor"
+brew doctor
