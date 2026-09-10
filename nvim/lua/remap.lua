@@ -30,4 +30,5 @@ vim.keymap.set("n", "<leader>/", comment) -- comment the current line
 
 -- lsp keymaps
 vim.keymap.set("n", "gd", vim.lsp.buf.definition) -- gd => go to symbol definition
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation) -- gi => go to symbol implementation
 vim.keymap.set("n", "gl", vim.diagnostic.open_float) -- gl => open floating diagnostic window

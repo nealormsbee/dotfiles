@@ -138,3 +138,7 @@ if [ -f "$HOMEBREW_PREFIX/opt/kube-ps1/share/kube-ps1.sh" ]; then
 	source "$HOMEBREW_PREFIX/opt/kube-ps1/share/kube-ps1.sh"
 	PS1='$(kube_ps1)'$PS1
 fi
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
