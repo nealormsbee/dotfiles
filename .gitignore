@@ -1,5 +1,5 @@
 # No tracking nvim plugins
-**/nvim/plugin
+nvim/plugin
 
 # No tracking env-specific custom setups
-osx/dotfiles/oh-my-zsh/custom/env.zsh
+oh-my-zsh/custom/env.zsh
