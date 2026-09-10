@@ -1,0 +1,8 @@
+alias j='jump'
+alias k='kubectl'
+alias kn='kubens'
+alias kpf='kubectl port-forward'
+alias kx='kubectx'
+alias turbo='npx turbo'
+alias v='nvim'
+alias vim='nvim'

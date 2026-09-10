@@ -1,11 +1,5 @@
-# No VCS for backup storage, but keep the structure
-osx/backups/*
-ubuntu/backups/*
-!osx/backups/.gitkeep
-!ubuntu/backups/.gitkeep
-
 # No tracking nvim plugins
 **/nvim/plugin
 
 # No tracking env-specific custom setups
-osx/dotfiles/oh-my-zsh/custom/*.zsh
+osx/dotfiles/oh-my-zsh/custom/env.zsh
