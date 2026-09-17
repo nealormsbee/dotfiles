@@ -38,7 +38,10 @@ mv ~/.config/nvim ~/.config/nvim.bak
 ln -s $(pwd)/nvim $HOME/.config/nvim
 
 mv ~/.oh-my-zsh/custom ~/.oh-my-zsh/custom.bak
-ln -s $(pwd)/oh-my-zsh/custom $HOME/.oh-my-zsh/custom
+cd oh-my-zsh/custom
+for file in * ; do
+    ln -s $(pwd)/$file $HOME/.oh-my-zsh/custom/$file
+done
 
 mkdir ~/.zsh_backups
 mv ~/.zshrc ~/.zlogin ~/.zprofile ~/.zshenv ~/.zsh_backups
@@ -56,5 +59,4 @@ ln -s $(pwd)/scripts/fedora-daily /usr/local/bin/daily
 
 * The order of ZSH file loading is `.zshenv` -> `.zprofile` (login shells) -> `.zshrc` (interactive shells) -> `.zlogin` (login shells)
 * The Nvim package manager I use is the builtin VimPack. I tried Lazy.nvim, and I imagine the async triggers etc. are worth it if you are very plugin-heavy. I have found VimPack to be very clean and simple.
-* I might see about eliminating oh-my-zsh soon. I love `zinit` (used in the `.zshrc`) and I think it can do everything oh-my-zsh can do.
-* In the meantime, `~/.oh-my-zsh` is a git repo of the OMZ framework, and `custom/` is the gitignored path where all user-defined content goes.
+* `~/.oh-my-zsh` is a git repo of the OMZ framework, and `custom/` is the gitignored path where all user-defined content goes.
