@@ -70,7 +70,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git jump)
+plugins=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,8 +123,14 @@ zinit ice wait atload"_zsh_autosuggest_start" lucid
 zinit light zsh-users/zsh-autosuggestions
 
 # oh-my-zsh plugins
+
+## git
 zinit ice wait lucid
-zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit snippet OMZP::git/git.plugin.zsh
+
+## jump
+zinit ice wait lucid
+zinit snippet OMZP::jump/jump.plugin.zsh
 
 # pure shell theme
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
