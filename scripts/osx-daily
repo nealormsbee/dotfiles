@@ -14,11 +14,11 @@ speak() {
 
 # update om-my-zsh
 echo "Updating oh-my-zsh..."
-ZSH='/home/neal/.oh-my-zsh'
+ZSH="$HOME/.oh-my-zsh"
 zsh "$ZSH/tools/upgrade.sh"
 
 # initialize zinit for this shell
-source "/home/neal/.local/share/zinit/zinit.git/zinit.zsh"
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 
 # update zinit
 echo "Updating zinit..."
