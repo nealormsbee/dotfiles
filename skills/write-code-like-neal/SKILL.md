@@ -7,6 +7,22 @@ license: MIT
 # Write Code Like Neal
 A style guide for writing code like Neal Ormsbee.
 
+## Results Over Elegance
+The bulk of this skill document is dedicated to how source code should be organized so that it may be easier to read, maintain, and reason about. Do not mistake this focus for an overriding, myopic concern for code organization over results. The elegance of source code is **ALWAYS** subordinate to the elegance of the result, never vice-versa. Put another way, pretty, readable, well-organized or well-abstracted code should never be persued to the detriment of the goal that code is trying to achieve. The goal is **ALWAYS** more important. This skill is called "write-code-like-neal", because it focuses on the art of writing decent source code. A skill called "develop-software-like-neal" would be all about usability, reliability, security, and performance.
+
+The one exception to this rule is performance. Default to code that is readable over code that is hideous and squeezes out a few extra nanoseconds of performance. Performance-sensitive paths can be optimized as they are discovered.
+
+## Convention Over Opinion
+In all things related to code organization and style, follow conventions set forth by the project if any such documents are linked in its `AGENTS.md` or other agent-targeted files. Consistency is critical, and so any such documented conventions supersede the conventions described in this skill. If editing an existing module in the absence of such documents, make an effort to follow implicit conventions which exist in the module. In greenfield modules with no documented conventions, follow the conventions enumerated in this skill.
+
+DO NOT, in any case, read samples of code from other modules in the project to get a "feel" for the project's conventions. That action would pollute the context window, and will likely be unhelpful as a project with no documented code conventions is likely to be internally inconsistent.
+
+In short, conventions have the following order of precedence, from most to least:
+
+* Conventions explicitly declared in agent-targeted documents.
+* Conventions implied by by the module being modified.
+* Conventions enumerated in this skill.
+
 ## Comments
 Getting comments right is *very* important. Comments are so helpful when done well, and annoying or even detrimental when done poorly. 
 
@@ -131,7 +147,7 @@ In gang of 4 terms, I love me some Observer pattern. It's so easy to implement a
 The Strategy pattern is also terrific. Will fill out this section after some sleep.
 Also a big fan of functional patterns like immutability. Mutation can and should be used in situations where it makes sense, like memory-constrained operations. Prefer immutable by default as it prevents so many classes of bugs, especially when multithreading. Also need to add a section on clarity of intent in code by using named things. A great example being that Javascript's Arrays have `.map()`, `.filter()`, `.reduce()`, and `.forEach()`. the behaviors of each of these can be matched using `for () {}` loops, but the name of the function *tells the reader* something about your intention, which is valuable. Maybe also a section on who the reader is and what they need to know, which gives context to why we don't want to litigate project history in comments but maybe do want to provide some depth on why things behave the way the do.
 
-## Visual Design & Styling - WIP
+## Visual Design & Styling - WIP - Split out references for different languages and include this content in html/css development
 CSS is not a strength, so don't improvise a design from scratch each time — apply the concrete defaults below. Treat this section as carrying the same weight as Comments, Naming, and Organization above: a page's visual polish should never be the thing that gets shortchanged because effort went into code structure instead. Structure and style are not in tension; both get done properly.
 
 ### Color
