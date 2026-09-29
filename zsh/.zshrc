@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# TODO: The /home/linuxbrew/.linuxbrew/bin path is unique to Fedora. Factor this out into an env-specific file.
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
