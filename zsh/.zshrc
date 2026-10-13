@@ -1,3 +1,4 @@
+startTime=$(gdate +%s%3N)
 # If you come from bash you might have to change your $PATH.
 # TODO: The /home/linuxbrew/.linuxbrew/bin path is unique to Fedora. Factor this out into an env-specific file.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
@@ -145,3 +146,6 @@ if [ -f "$HOMEBREW_PREFIX/opt/kube-ps1/share/kube-ps1.sh" ]; then
 	source "$HOMEBREW_PREFIX/opt/kube-ps1/share/kube-ps1.sh"
 	PS1='$(kube_ps1)'$PS1
 fi
+finishTime=$(gdate +%s%3N)
+execTime=$((finishTime - startTime))
+echo "zshrc startup took ${execTime}ms"

@@ -8,16 +8,16 @@ license: MIT
 A style guide for writing code like Neal Ormsbee.
 
 ## Results Over Elegance
-The bulk of this skill document is dedicated to how source code should be organized so that it may be easier to read, maintain, and reason about. Do not mistake this focus for an overriding, myopic concern for code organization over results. The elegance of source code is **ALWAYS** subordinate to the elegance of the result, never vice-versa. Put another way, pretty, readable, well-organized or well-abstracted code should never be persued to the detriment of the goal that code is trying to achieve. The goal is **ALWAYS** more important. This skill is called "write-code-like-neal", because it focuses on the art of writing decent source code. A skill called "develop-software-like-neal" would be all about usability, reliability, security, and performance.
+The bulk of this skill document is dedicated to how source code should be organized so that it may be easier to read, maintain, and reason about. Do not mistake this focus for an overriding, myopic concern for code organization over results. The elegance of source code is **ALWAYS** subordinate to the elegance of the result, never vice-versa. Put another way, pretty, readable, well-organized or well-abstracted code should never be persued to the detriment of the goal that code is trying to achieve. The goal is **ALWAYS** more important. This skill is called "write-code-like-neal", because it focuses on the art of writing decent source code. A skill called "develop-software-like-neal" would be all about usability, reliability, security, and performance, with code quality as a footnote.
 
-The one exception to this rule is performance. Default to code that is readable over code that is hideous and squeezes out a few extra nanoseconds of performance. Performance-sensitive paths can be optimized as they are discovered.
+There is, of course, a balance to strike. In the case of performance, for example, default to code that is readable over code that is hideous and squeezes out a few extra nanoseconds of performance. Performance-sensitive paths can be optimized as they are discovered.
 
 ## Convention Over Opinion
 In all things related to code organization and style, follow conventions set forth by the project if any such documents are linked in its `AGENTS.md` or other agent-targeted files. Consistency is critical, and so any such documented conventions supersede the conventions described in this skill. If editing an existing module in the absence of such documents, make an effort to follow implicit conventions which exist in the module. In greenfield modules with no documented conventions, follow the conventions enumerated in this skill.
 
 DO NOT, in any case, read samples of code from other modules in the project to get a "feel" for the project's conventions. That action would pollute the context window, and will likely be unhelpful as a project with no documented code conventions is likely to be internally inconsistent.
 
-In short, conventions have the following order of precedence, from most to least:
+In short, conventions have the following order of precedence, from highest to lowest:
 
 * Conventions explicitly declared in agent-targeted documents.
 * Conventions implied by by the module being modified.
@@ -25,6 +25,8 @@ In short, conventions have the following order of precedence, from most to least
 
 ## Comments
 Getting comments right is *very* important. Comments are so helpful when done well, and annoying or even detrimental when done poorly. 
+
+The specific formatting of comments will vary from language to language, and should accommodate the best practices of the language and the formatting recognized by tooling, if specified.
 
 ### Module Comments
 Always provide a comment block at the top of a module explaining the purpose of the module and its major functionality. Do *not* go into implementation detail about *how* the module does what it does, or explain any of the decisions about *why* the module is the way it is. Only explain the *what*, not the *why*, *how*, or *when*. Any refernce to *who* should just be an `authors: ` line in the comment block. Example of a good module-level comment:
@@ -37,7 +39,7 @@ Always provide a comment block at the top of a module explaining the purpose of 
  */
 ```
 
-Module-level comments need not always be this succinct. And an example of a poor module-level comment:
+Module-level comments need not always be this succinct. An example of a poor module-level comment:
 
 ```typescript
 /**
@@ -100,6 +102,30 @@ Organizing code in a way that makes it navigable to power contributors and progr
 ### Project
 The module layout will vary significantly by project. In general, keep things organized by business domain by default, and only abstract to lower-level utilities as patterns reveal themselves. For example, in an e-commerce app that supports inventory and billing functions, we would start by organizing code into these two domains. Then, when both domains implement the same behavior of accessing a shared database, we can abstract a database connection utility that both of these domains leverage.
 
+Business domain modules should **never** import code from one another. Code for a domain module should only be used within the module. Code that is consumed by multiple domains should live in a project directory that is explicitly known to be for shared code. For example, if we have the following project structure:
+
+```
+project/
+|-- modules/
+|   |-- domainA/
+|   |   |-- logicA.ts
+|   |-- domainB/
+|   |   |-- logicB.ts
+```
+
+where `logicA.go` performs database access, and we now want to add database access to `logicB.go`, **do not** import code from `logicA.go` into `logicB.go`. Instead, restructure the project to look somehing like this, where `logicA.go` and `logicB.go` both now import from `database.go`.
+
+```
+project/
+|-- modules/
+|   |-- domainA/
+|   |   |-- logicA.ts
+|   |-- domainB/
+|   |   |-- logicB.ts
+|-- shared/
+|   |-- database.go
+```
+
 ### File
 The ordering in a file should be, with rare exception:
 
@@ -142,55 +168,28 @@ fn privateFunc2() {}
 ```
 In golang, functions starting with a capital letter are public, so those all come first in the file.
 
-## Favorite Patterns - WIP
-In gang of 4 terms, I love me some Observer pattern. It's so easy to implement and the decoupling allowed by event-driven systems using this makes so much sense to me.
-The Strategy pattern is also terrific. Will fill out this section after some sleep.
-Also a big fan of functional patterns like immutability. Mutation can and should be used in situations where it makes sense, like memory-constrained operations. Prefer immutable by default as it prevents so many classes of bugs, especially when multithreading. Also need to add a section on clarity of intent in code by using named things. A great example being that Javascript's Arrays have `.map()`, `.filter()`, `.reduce()`, and `.forEach()`. the behaviors of each of these can be matched using `for () {}` loops, but the name of the function *tells the reader* something about your intention, which is valuable. Maybe also a section on who the reader is and what they need to know, which gives context to why we don't want to litigate project history in comments but maybe do want to provide some depth on why things behave the way the do.
+## Patterns
+Some preferred stylistic patterns.
 
-## Visual Design & Styling - WIP - Split out references for different languages and include this content in html/css development
-CSS is not a strength, so don't improvise a design from scratch each time — apply the concrete defaults below. Treat this section as carrying the same weight as Comments, Naming, and Organization above: a page's visual polish should never be the thing that gets shortchanged because effort went into code structure instead. Structure and style are not in tension; both get done properly.
+### Prefer Early Returns
+If a function is a no-op under certain conditions, return early on those conditions and put actual logic underneath, rather than nesting logic inside conditionals. Examples:
 
-### Color
-- Define all colors as CSS custom properties on `:root` (e.g. `--fg`, `--bg`, `--muted`, `--line`, `--accent`). Never hardcode color values inline or scattered across selectors.
-- Support dark mode via `@media (prefers-color-scheme: dark)` redefining the same custom properties. Don't build a separate stylesheet or a JS-driven toggle unless asked.
-- Prefer soft, warm color schemes over stark, high-contrast ones:
-  - Avoid pure `#fff` backgrounds and pure `#000` text. Use warm off-whites/creams for light backgrounds and softened, warm darks (not cold blue-blacks) for dark mode.
-  - Avoid saturated, high-chroma accent colors; prefer muted, desaturated tones.
-  - Aim for comfortable reading contrast, not maximal contrast.
-
-Baseline palette to start from and adjust per project:
-
-```css
-:root {
-  color-scheme: light dark;
-  --fg: #3a352f;
-  --muted: #8a8177;
-  --bg: #fbf9f6;
-  --line: #e8e2d9;
-  --accent: #b5794a;
+```typescript
+// BAD - logic is nested which makes reading and reasoning harder for humans
+function doSomething(a: number): number | undefined {
+    if (a % 2) {
+        // lots of logic here
+    }
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fg: #e8e2d9;
-    --muted: #a39a8d;
-    --bg: #211e1a;
-    --line: #3a352f;
-    --accent: #d69b6b;
-  }
+
+// GOOD - eliminate no-op cases and then proceed.
+function doSomething(a: number): number | undefined {
+    if (!(a % 2)) {
+        return;
+    }
+    // lots of logic here
 }
 ```
 
-### Typography
-- Establish a real type scale: headings, body text, and secondary/muted text should be visibly distinct sizes, not all the same.
-- Use a comfortable line-height for body text (1.4-1.6).
-- Label-style text (table headers, section labels, eyebrows) reads best small, uppercase, letter-spaced, and in the muted color, rather than matching body weight/size.
-
-### Spacing
-- Pick a spacing scale (e.g. multiples of 4px or 8px) and use only those values, rather than one-off pixel/rem numbers chosen per element.
-
-### Data & Tables
-- Numeric columns should use `font-variant-numeric: tabular-nums` so values align vertically.
-- Right-align numeric columns; left-align labels.
-
-### Precedence
-These are defaults for when no stronger design direction is given. Always defer to explicit user instructions or an existing design system in the project over these defaults.
+## Language-Specific Guidance
+The guidelines given here are general baselines. Typescript and Go are often used as reference examples. For more specific guidance on the language you are working with, see `references/` for a markdown file on that language.
