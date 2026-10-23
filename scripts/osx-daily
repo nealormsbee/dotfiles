@@ -13,7 +13,10 @@ speak() {
 }
 
 # update om-my-zsh
-echo "Updating oh-my-zsh..."
+echo "======================"
+echo "| Updating oh-my-zsh |"
+echo "======================"
+speak "Updating Oh Em Zee"
 ZSH="$HOME/.oh-my-zsh"
 zsh "$ZSH/tools/upgrade.sh"
 
@@ -21,43 +24,64 @@ zsh "$ZSH/tools/upgrade.sh"
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 
 # update zinit
-echo "Updating zinit..."
+echo "=================="
+echo "| Updating zinit |"
+echo "=================="
+speak "Updating Zee Init"
 zi self-update
 
 # update zinit plugins
-echo "Updating zinit plugins..."
+echo "=========================="
+echo "| Updating zinit plugins |"
+echo "=========================="
+speak "Updating Zee Init Plugins"
 zi update --parallel
 
 # update rust install via rustup
-echo "Updating rust..."
+echo "================="
+echo "| Updating rust |"
+echo "================="
+speak "Updating Rust"
 rustup update
 
 # update homebrew
-echo Updating...
-speak "Updating"
+echo "============================="
+echo "| Updating homebrew indexes |"
+echo "============================="
+speak "Updating homebrew indexes"
 brew update
 
 # upgrade packages
-echo Upgrading non-casks...
-speak "Upgrading see el eye tools"
+echo "========================================="
+echo "| Upgrading homebrew non-cask packages |"
+echo "========================================="
+speak "Upgrading homebrew see el eye tools"
 brew upgrade
 
 # upgrade casks
-echo Upgrading casks...
-speak "Upgrading casks"
+echo "===================================="
+echo "| Upgrading homebrew cask packages |"
+echo "===================================="
+speak "Upgrading homebrew casks"
 brew upgrade --cask
 
 # remove old package versions
-echo Removing old versions...
-speak "Removing old versions"
+echo "=========================================="
+echo "| Removing old homebrew package versions |"
+echo "=========================================="
+speak "Removing old homebrew package versions"
 brew cleanup
 
 # restart background services
-echo "Restarting background services..."
-speak "Restarting background services..."
+echo "================================"
+echo "| Restarting homebrew services |"
+echo "================================"
+speak "Restarting homwbrew services"
 brew services restart --all
 
 # confirm system integrity
-echo Running brew system check...
+echo "======================="
+echo "| Running brew doctor |"
+echo "======================="
 speak "Running brew doctor"
 brew doctor
